@@ -7,6 +7,13 @@ let
 
   pkgs = import nixpkgsPath {};
 
+#  monadBayesSrc = pkgs.fetchFromGitHub {
+#    owner = "jkoppel";
+#    repo = "monad-bayes";
+#    rev = "079f2c7a4b6e8bb782da6995aa669607722d28fd";
+#    sha256 = "0v4kby3b83a6wglcjj5g6vxgni89g6wpj02x125fi2sw4g3bwjgx";
+#  };
+
   monadBayesSrc = pkgs.fetchFromGitHub {
     owner = "adscib";
     repo = "monad-bayes";
@@ -38,6 +45,7 @@ let
       name = "bayes-monad";
       packages = p: with p; [
         matrix
+        hmatrix
         monad-bayes
         hvega
         statistics 
