@@ -1,60 +1,27 @@
 let
   jupyterLib = builtins.fetchGit {
     url = https://github.com/tweag/jupyterWith;
-    rev = "";
+    rev = "70f1dddd6446ab0155a5b0ff659153b397419a2d";
   };
   nixpkgsPath = jupyterLib + "/nix";
+  haskellOverlay = import ./haskell-overlay.nix;
+  pkgs = import nixpkgsPath {overlays = [ haskellOverlay ]; config={allowUnfree=true; allowBroken=true;};};
 
-  pkgs = import nixpkgsPath {};
-
-#  monadBayesSrc = pkgs.fetchFromGitHub {
-#    owner = "jkoppel";
-#    repo = "monad-bayes";
-#    rev = "079f2c7a4b6e8bb782da6995aa669607722d28fd";
-#    sha256 = "0v4kby3b83a6wglcjj5g6vxgni89g6wpj02x125fi2sw4g3bwjgx";
-#  };
-
-  monadBayesSrc = pkgs.fetchFromGitHub {
-    owner = "adscib";
-    repo = "monad-bayes";
-    rev = "f55d9fa9d24d169d53bb03598306ee8c46b5fc11";
-    sha256 = "1w2s5kgvdp8zfj464xmjb4kzpfsq6vc2jjakgixhs8wppq9vbvda";
-  };
-
-  hVegaSrc = pkgs.fetchFromGitHub {
-    owner = "DougBurke";
-    repo = "hvega";
-    rev = "hvega-0.4.0.0";
-    sha256 = "1pg655a36nsz7h2l1sbyk4zzzjjw4dlah8794bc0flpigr7iik13";
-  };
-
-  haskellPackages = pkgs.haskellPackages.override (old: {
-    overrides = pkgs.lib.composeExtensions old.overrides
-        (self: hspkgs: {
-          monad-bayes = hspkgs.callCabal2nix "monad-bayes" "${monadBayesSrc}" {};
-          hvega = hspkgs.callCabal2nix "hvega" "${hVegaSrc}/hvega" {};
-          ihaskell-hvega = hspkgs.callCabal2nix "ihaskell-hvega" "${hVegaSrc}/ihaskell-hvega" {};
-        });
-      });
-
-  jupyter = import jupyterLib { pkgs=pkgs; };
+  jupyter = import jupyterLib {pkgs=pkgs;};
 
   ihaskellWithPackages = jupyter.kernels.iHaskellWith {
       #extraIHaskellFlags = "--debug";
-      haskellPackages=haskellPackages;
-      name = "bayes-monad";
+      haskellPackages = pkgs.haskell.packages.ghc865;
+      name = "hasktorch";
       packages = p: with p; [
-        matrix
-        hmatrix
         monad-bayes
         hvega
         statistics 
         vector
         ihaskell-hvega
-        aeson
-        aeson-pretty
         formatting
         foldl
+        histogram-fill
       ];
     };
 
