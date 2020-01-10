@@ -14,7 +14,6 @@ let
       haskellPackages = pkgs.haskell.packages.ghc865;
       name = "hasktorch";
       packages = p: with p; [
-        hmatrix
         monad-bayes
         hvega
         statistics 
