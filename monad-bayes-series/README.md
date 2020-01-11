@@ -4,7 +4,7 @@ Blog posts:
 - [Probabilistic Programming with monad‑bayes, Part 1:
 First Steps](https://www.tweag.io/posts/2019-09-20-monad-bayes-1.html)
 
-## How to run the notebook locally
+## How to run the notebook locally on Linux
 
 1. Clone the repo.
    ```console
