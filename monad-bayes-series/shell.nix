@@ -12,7 +12,7 @@ let
   ihaskellWithPackages = jupyter.kernels.iHaskellWith {
       #extraIHaskellFlags = "--debug";
       haskellPackages = pkgs.haskell.packages.ghc865;
-      name = "hasktorch";
+      name = "monad-bayes";
       packages = p: with p; [
         monad-bayes
         hvega
