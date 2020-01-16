@@ -1,0 +1,7 @@
+resolver: lts-14.20
+packages:
+ - .
+
+# Necessary flags
+apply-ghc-options: everything
+rebuild-ghc-options: true
