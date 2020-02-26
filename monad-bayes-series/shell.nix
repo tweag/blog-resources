@@ -15,6 +15,7 @@ let
       name = "monad-bayes";
       packages = p: with p; [
         monad-bayes
+        hmatrix
         hvega
         statistics 
         vector
