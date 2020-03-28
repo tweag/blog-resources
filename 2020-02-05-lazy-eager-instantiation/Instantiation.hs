@@ -5,17 +5,17 @@
 
 module Instantiation where
 
--- | Define a synonym for `id`
-myId = id
+-- | Define a synonym for `const`
+myConst = const
 
 -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
--- | Instantiate the polymorphic `id` synonym
-id_int :: Int -> Int
+-- | Instantiate the polymorphic `const` synonym
+const_int :: Int -> b -> Int
 -- This does not compile:
--- id_int = myId @Int
+-- const_int = myConst @Int
 -- While this does work:
-id_int = id @Int
+const_int = const @Int
 
 -- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -42,7 +42,7 @@ bar1 True  = \ x -> id
 bar2 True  = \ x -> id
 bar2 False = error "Impossible case for reasons"
 
--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+-- Note that this funny behaviour actually already exists today:
 
 funny :: (forall a. a -> a) -> ()
 funny _ = ()
@@ -51,6 +51,7 @@ funny _ = ()
 baz1 True  = funny
 
 -- | Multi-equation function: gets rejected!
+-- GHC can not infer a monomorphic type for its case results.
 -- baz2 True  = funny
 -- baz2 False = funny
 
