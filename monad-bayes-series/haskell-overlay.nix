@@ -1,11 +1,14 @@
+# Mostly copied from:
+# https://raw.githubusercontent.com/tweag/jupyterWith/b0b4e55da09973a57b82200789816f050a970f3e/nix/haskell-overlay.nix
+
 _: pkgs:
 
 let
   ihaskellSrc = pkgs.fetchFromGitHub {
     owner = "gibiansky";
     repo = "IHaskell";
-    rev = "a992ad83702e55b774de234d77ffd2682d842682";
-    sha256 = "123kbmkpbh978x9c30igxz2xlr9842lddfgnkxbidwzscbccqrh8";
+    rev = "d7dc460a421abaa41e04fe150e264bc2bab5cbad";
+    sha256 = "157mqfprjbjal5mvrqwpgnfvc93fn1pqwwkhfpcs7jm5c34bkv3q";
   };
 
   monadBayesSrc = pkgs.fetchFromGitHub {
@@ -67,36 +70,21 @@ let
       ihaskell-widgets = callDisplayPackage "widgets";
 
       # Marked as broken in this version of Nixpkgs.
-      chell = hspkgs.callHackage "chell" "0.4.0.2" {};
-      patience = hspkgs.callHackage "patience" "0.1.1" {};
-
-      # Version compatible with ghc-lib-parser.
-      hlint = hspkgs.callHackage "hlint" "2.2.1" {};
+      #chell = hspkgs.callHackage "chell" "0.4.0.2" {};
+      #patience = hspkgs.callHackage "patience" "0.1.1" {};
 
       # Tests not passing.
-      Diff = dontCheck hspkgs.Diff;
-      zeromq4-haskell = dontCheck hspkgs.zeromq4-haskell;
-      funflow = dontCheck hspkgs.funflow;
-
-      # Haddocks not building.
-      ghc-lib-parser = dontHaddock hspkgs.ghc-lib-parser;
-
-      # Missing dependency.
-      aeson = pkgs.haskell.lib.addBuildDepends hspkgs.aeson [ self.contravariant ];
-
+      #Diff = dontCheck hspkgs.Diff;
+      #zeromq4-haskell = dontCheck hspkgs.zeromq4-haskell;
 
     };
 in
 
 {
-  haskell = pkgs.haskell // {
-    packages = pkgs.haskell.packages // {
-      "ghc865" = pkgs.haskell.packages.ghc865.override (old: {
-          overrides =
-              pkgs.lib.composeExtensions
-                (old.overrides or (_: _: {}))
-                overrides;}
-              );
-            };
-          };
+  haskellPackages = pkgs.haskellPackages.override (old: {
+    overrides =
+      pkgs.lib.composeExtensions
+        (old.overrides or (_: _: {}))
+        overrides;
+  });
 }
