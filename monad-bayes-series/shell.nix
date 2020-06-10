@@ -29,11 +29,15 @@ let
   jupyterlabWithKernels =
     jupyter.jupyterlabWith {
       kernels = [ ihaskellWithPackages ];
-      directory = jupyter.mkDirectoryWith {
-        extensions = [
-          "jupyterlab-ihaskell"
-        ];
-      };
+      # The jupyterlab-ihaskell extension is incompatible with the latest
+      # jupyterWith version. Re-enable the extension to get syntax highlighting
+      # once there is a compatible version.
+      #
+      #directory = jupyter.mkDirectoryWith {
+      #  extensions = [
+      #    "jupyterlab-ihaskell"
+      #  ];
+      #};
     };
 in
   jupyterlabWithKernels.env
