@@ -1,7 +1,7 @@
 let
   jupyterLib = builtins.fetchGit {
     url = https://github.com/tweag/jupyterWith;
-    rev = "70f1dddd6446ab0155a5b0ff659153b397419a2d";
+    rev = "b0b4e55da09973a57b82200789816f050a970f3e";
   };
   nixpkgsPath = jupyterLib + "/nix";
   haskellOverlay = import ./haskell-overlay.nix;
