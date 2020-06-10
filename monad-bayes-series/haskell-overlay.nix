@@ -4,15 +4,15 @@ let
   ihaskellSrc = pkgs.fetchFromGitHub {
     owner = "gibiansky";
     repo = "IHaskell";
-    rev = "2318ee2a90cfc98390651657aec434586b963235";
-    sha256 = "0svjzs81i77s710cfb7pxkfdi979mhjazpc2l9k9ha752spz04cj";
+    rev = "a992ad83702e55b774de234d77ffd2682d842682";
+    sha256 = "123kbmkpbh978x9c30igxz2xlr9842lddfgnkxbidwzscbccqrh8";
   };
 
   monadBayesSrc = pkgs.fetchFromGitHub {
-    owner = "adscib";
+    owner = "tweag";
     repo = "monad-bayes";
-    rev = "fb87bf039bab35dcc82de8ccf8963a7a576af355";
-    sha256 = "0jz7lswdzxzn5zzwypdawdj7j0y20aakmqggv9pw4sknajdqqqyf";
+    rev = "1d368b9309b39112a7b38e779157ae481dd1c2ef";
+    sha256 = "15sf3gm2zn31wcxbr8yqvnsfgnw176xn79vfqcf536bscx2l6bvp";
   };
 
   hVegaSrc = pkgs.fetchFromGitHub {
