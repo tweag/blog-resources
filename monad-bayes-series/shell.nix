@@ -1,7 +1,7 @@
 let
   jupyterLib = builtins.fetchGit {
     url = https://github.com/tweag/jupyterWith;
-    rev = "70f1dddd6446ab0155a5b0ff659153b397419a2d";
+    rev = "b0b4e55da09973a57b82200789816f050a970f3e";
   };
   nixpkgsPath = jupyterLib + "/nix";
   haskellOverlay = import ./haskell-overlay.nix;
@@ -29,11 +29,15 @@ let
   jupyterlabWithKernels =
     jupyter.jupyterlabWith {
       kernels = [ ihaskellWithPackages ];
-      directory = jupyter.mkDirectoryWith {
-        extensions = [
-          "jupyterlab-ihaskell"
-        ];
-      };
+      # The jupyterlab-ihaskell extension is incompatible with the latest
+      # jupyterWith version. Re-enable the extension to get syntax highlighting
+      # once there is a compatible version.
+      #
+      #directory = jupyter.mkDirectoryWith {
+      #  extensions = [
+      #    "jupyterlab-ihaskell"
+      #  ];
+      #};
     };
 in
   jupyterlabWithKernels.env

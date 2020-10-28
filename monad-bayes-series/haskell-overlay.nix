@@ -1,18 +1,21 @@
+# Mostly copied from:
+# https://raw.githubusercontent.com/tweag/jupyterWith/b0b4e55da09973a57b82200789816f050a970f3e/nix/haskell-overlay.nix
+
 _: pkgs:
 
 let
   ihaskellSrc = pkgs.fetchFromGitHub {
     owner = "gibiansky";
     repo = "IHaskell";
-    rev = "2318ee2a90cfc98390651657aec434586b963235";
-    sha256 = "0svjzs81i77s710cfb7pxkfdi979mhjazpc2l9k9ha752spz04cj";
+    rev = "d7dc460a421abaa41e04fe150e264bc2bab5cbad";
+    sha256 = "157mqfprjbjal5mvrqwpgnfvc93fn1pqwwkhfpcs7jm5c34bkv3q";
   };
 
   monadBayesSrc = pkgs.fetchFromGitHub {
-    owner = "adscib";
+    owner = "tweag";
     repo = "monad-bayes";
-    rev = "fb87bf039bab35dcc82de8ccf8963a7a576af355";
-    sha256 = "0jz7lswdzxzn5zzwypdawdj7j0y20aakmqggv9pw4sknajdqqqyf";
+    rev = "1d368b9309b39112a7b38e779157ae481dd1c2ef";
+    sha256 = "15sf3gm2zn31wcxbr8yqvnsfgnw176xn79vfqcf536bscx2l6bvp";
   };
 
   hVegaSrc = pkgs.fetchFromGitHub {
@@ -67,36 +70,21 @@ let
       ihaskell-widgets = callDisplayPackage "widgets";
 
       # Marked as broken in this version of Nixpkgs.
-      chell = hspkgs.callHackage "chell" "0.4.0.2" {};
-      patience = hspkgs.callHackage "patience" "0.1.1" {};
-
-      # Version compatible with ghc-lib-parser.
-      hlint = hspkgs.callHackage "hlint" "2.2.1" {};
+      #chell = hspkgs.callHackage "chell" "0.4.0.2" {};
+      #patience = hspkgs.callHackage "patience" "0.1.1" {};
 
       # Tests not passing.
-      Diff = dontCheck hspkgs.Diff;
-      zeromq4-haskell = dontCheck hspkgs.zeromq4-haskell;
-      funflow = dontCheck hspkgs.funflow;
-
-      # Haddocks not building.
-      ghc-lib-parser = dontHaddock hspkgs.ghc-lib-parser;
-
-      # Missing dependency.
-      aeson = pkgs.haskell.lib.addBuildDepends hspkgs.aeson [ self.contravariant ];
-
+      #Diff = dontCheck hspkgs.Diff;
+      #zeromq4-haskell = dontCheck hspkgs.zeromq4-haskell;
 
     };
 in
 
 {
-  haskell = pkgs.haskell // {
-    packages = pkgs.haskell.packages // {
-      "ghc865" = pkgs.haskell.packages.ghc865.override (old: {
-          overrides =
-              pkgs.lib.composeExtensions
-                (old.overrides or (_: _: {}))
-                overrides;}
-              );
-            };
-          };
+  haskellPackages = pkgs.haskellPackages.override (old: {
+    overrides =
+      pkgs.lib.composeExtensions
+        (old.overrides or (_: _: {}))
+        overrides;
+  });
 }
