@@ -1,11 +1,9 @@
 _: pkgs:
 
 let
-  ihaskellSrc = pkgs.fetchFromGitHub {
-    owner = "gibiansky";
-    repo = "IHaskell";
-    rev = "2318ee2a90cfc98390651657aec434586b963235";
-    sha256 = "0svjzs81i77s710cfb7pxkfdi979mhjazpc2l9k9ha752spz04cj";
+  ihaskellSrc = builtins.fetchGit {
+    url =https://github.com/gibiansky/IHaskell;
+    rev = "2de36f746d54c79659d941a97e9ed5b25ac8e384";
   };
 
   monadBayesSrc = pkgs.fetchFromGitHub {
@@ -77,10 +75,11 @@ let
       Diff = dontCheck hspkgs.Diff;
       zeromq4-haskell = dontCheck hspkgs.zeromq4-haskell;
       funflow = dontCheck hspkgs.funflow;
+      haskell-src-meta = dontCheck hspkgs.haskell-src-meta;
 
       # Haddocks not building.
-      ghc-lib-parser = dontHaddock hspkgs.ghc-lib-parser;
-
+      ghc-lib-parser = dontHaddock (hspkgs.callHackage "ghc-lib-parser" "8.8.0.20190424" {}); # hspkgs.ghc-lib-parser
+      haskell-src-exts = hspkgs.callHackage "haskell-src-exts" "1.21.0" {};
       # Missing dependency.
       aeson = pkgs.haskell.lib.addBuildDepends hspkgs.aeson [ self.contravariant ];
 

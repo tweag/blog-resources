@@ -1,7 +1,7 @@
 let
   jupyterLib = builtins.fetchGit {
     url = https://github.com/tweag/jupyterWith;
-    rev = "70f1dddd6446ab0155a5b0ff659153b397419a2d";
+    rev = "cd0743170d9da4a9e59fad8daf17dd4769bd2158"; 
   };
   nixpkgsPath = jupyterLib + "/nix";
   haskellOverlay = import ./haskell-overlay.nix;
@@ -24,16 +24,12 @@ let
         foldl
         histogram-fill
       ];
+      extraIHaskellFlags = "--codemirror Haskell";
     };
 
   jupyterlabWithKernels =
     jupyter.jupyterlabWith {
       kernels = [ ihaskellWithPackages ];
-      directory = jupyter.mkDirectoryWith {
-        extensions = [
-          "jupyterlab-ihaskell"
-        ];
-      };
     };
 in
   jupyterlabWithKernels.env
