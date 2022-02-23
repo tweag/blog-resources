@@ -11,10 +11,7 @@
       let
         pkgs = import nixpkgs {
           system = system;
-          overlays = 
-            (builtins.attrValues jupyterWith.overlays) ++ [
-            (import ./haskell-overlay.nix) 
-          ];
+          overlays = (builtins.attrValues jupyterWith.overlays) ++ [ (import ./haskell-overlay.nix) ];
         };
         iHaskell = pkgs.kernels.iHaskellWith {
           name = "monad-bayes-series-env";
