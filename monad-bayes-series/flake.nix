@@ -2,10 +2,6 @@
   description = "Probabilistic Programming in Haskell blog resourses";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
-    #nixpkgs = {
-    #  url = "github:NixOS/nixpkgs/f0bc52214879095e03f5256d2eb35796b549c048"; 
-    #  flake = false;
-    #};
     jupyterWith.url = "github:tweag/jupyterWith";
     flake-utils.url = "github:numtide/flake-utils";
   };
