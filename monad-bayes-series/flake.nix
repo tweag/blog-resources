@@ -1,7 +1,7 @@
 {
   description = "Probabilistic Programming in Haskell blog resourses";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
+    nixpkgs.url = "nixpkgs/22.05";
     jupyterWith.url = "github:tweag/jupyterWith";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -9,9 +9,10 @@
   outputs = { self, nixpkgs, jupyterWith, flake-utils }:
     flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
       let
+        inherit (nixpkgs) lib;
         pkgs = import nixpkgs {
           system = system;
-          overlays = (builtins.attrValues jupyterWith.overlays) ++ [ (import ./haskell-overlay.nix) ];
+          overlays = (nixpkgs.lib.attrValues jupyterWith.overlays) ++ [ (import ./haskell-overlay.nix) ];
         };
         iHaskell = pkgs.kernels.iHaskellWith {
           name = "monad-bayes-series-env";
