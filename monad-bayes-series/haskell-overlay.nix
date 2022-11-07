@@ -7,10 +7,10 @@ let
   };
 
   monadBayesSrc = pkgs.fetchFromGitHub {
-    owner = "adscib";
+    owner = "tweag";
     repo = "monad-bayes";
-    rev = "fb87bf039bab35dcc82de8ccf8963a7a576af355";
-    sha256 = "0jz7lswdzxzn5zzwypdawdj7j0y20aakmqggv9pw4sknajdqqqyf";
+    rev = "50b486598cd949c4a7906598fc357a80cae3bbc6";
+    sha256 = "bjIl/vg+RGAKLyOnbmtFUQHubtHK6b7m8bSE96tj7uI=";
   };
 
   hVegaSrc = pkgs.fetchFromGitHub {
@@ -18,6 +18,26 @@ let
     repo = "hvega";
     rev = "hvega-0.4.0.0";
     sha256 = "1pg655a36nsz7h2l1sbyk4zzzjjw4dlah8794bc0flpigr7iik13";
+  };
+  
+  brickSrc = pkgs.fetchzip {
+    url = "mirror://hackage/brick-1.4/brick-1.4.tar.gz";
+    sha256 = "sha256-KDa7RVQQPpinkJ0aKsYP0E50pn2auEIP38l6Uk7GmmE=";
+  };
+
+  bimapSrc = pkgs.fetchzip {
+    url = "mirror://hackage/bimap-0.5.0/bimap-0.5.0.tar.gz";
+    sha256 = "sha256-pbw+xg9Qz/c7YoXAJg8SR11RJGmgMw5hhnzKv+bGK9w=";
+  };
+
+  vtySrc = pkgs.fetchzip {
+    url = "mirror://hackage/vty-5.37/vty-5.37.tar.gz";
+    sha256 = "sha256-OOrJBi/mSIyaibgObrp6NmUTWxRu9pxmjAL0EuPV9wY=";
+  };
+
+  text-zipperSrc = pkgs.fetchzip {
+    url = "mirror://hackage/text-zipper-0.12/text-zipper-0.12.tar.gz";
+    sha256 = "sha256-P2/UHuG3UuSN7G31DyYvyUWSyIj2YXAOmjGkHtTaP8o=";
   };
 
   overrides = self: hspkgs:
@@ -32,6 +52,10 @@ let
     in
     {
       monad-bayes = hspkgs.callCabal2nix "monad-bayes" "${monadBayesSrc}" {};
+      brick = hspkgs.callCabal2nix "brick" "${brickSrc}" {};
+      bimap = hspkgs.callCabal2nix "bimap" "${bimapSrc}" {};
+      vty = hspkgs.callCabal2nix "vty" "${vtySrc}" {};
+      text-zipper = hspkgs.callCabal2nix "text-zipper" "${text-zipperSrc}" {};
       hvega = hspkgs.callCabal2nix "hvega" "${hVegaSrc}/hvega" {};
       ihaskell-hvega = hspkgs.callCabal2nix "ihaskell-hvega" "${hVegaSrc}/ihaskell-hvega" {};
       ihaskell = pkgs.haskell.lib.overrideCabal
