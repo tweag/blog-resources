@@ -1,7 +1,7 @@
 {
   description = "Probabilistic Programming in Haskell blog resourses";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
+    nixpkgs.url = "nixpkgs/22.05";
     jupyterWith.url = "github:tweag/jupyterWith";
     flake-utils.url = "github:numtide/flake-utils";
   };
@@ -26,7 +26,7 @@
             foldl
             histogram-fill
           ];
-          haskellPackages = pkgs.haskell.packages.ghc865;
+          haskellPackages = pkgs.haskell.packages.ghc884;
           extraIHaskellFlags = "--codemirror Haskell";
         };
         jupyterEnvironment = pkgs.jupyterlabWith {
