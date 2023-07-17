@@ -1,0 +1,7 @@
+#/bin/bash
+
+# Check the warnings emitted by emit-warnings against expected-warnings.txt.
+
+cabal build emit-warnings || { echo 'library build failed'; exit 1; }
+diff <(echo | GHC_NO_UNICODE="TRUE" cabal repl emit-warnings 2>&1) "$(dirname $0)/expected-warnings.txt" || { echo 'check failed'; exit 2; }
+1>&2 echo 'check passed'
