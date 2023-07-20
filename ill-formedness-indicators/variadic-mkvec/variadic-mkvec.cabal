@@ -1,0 +1,52 @@
+cabal-version:      2.4
+name:               variadic-mkvec
+version:            0.1.0.0
+
+synopsis:           a variadic function for constructors vectors
+
+description:        a variadic function for constructors vectors without inscrutable error messages
+
+license:            BSD-2-Clause
+author:             Nicolas Frisby
+maintainer:         nicolas.frisby@gmail.com
+
+
+library
+    default-language: Haskell2010
+    build-depends:    base
+
+    hs-source-dirs:   src
+                       
+    exposed-modules:
+                      Data.Vec
+                      Data.Vec.LiteralSyntax.Enclosed
+                      Data.Vec.LiteralSyntax.EnclosedOI
+                      Data.Vec.LiteralSyntax.EnclosedUnguarded
+                      Data.Vec.LiteralSyntax.Sentinel
+                      Data.Vec.LiteralSyntax.SentinelUnguarded
+
+    ghc-options:
+                      -Wall
+                      -Wcompat
+                      -Wincomplete-uni-patterns
+                      -Wincomplete-record-updates
+                      -Wpartial-fields
+                      -Widentities
+                      -Wredundant-constraints
+                      -Wmissing-export-lists
+                      -Wno-unticked-promoted-constructors
+
+test-suite emit-warnings
+    default-language: Haskell2010
+    type:             exitcode-stdio-1.0
+
+    hs-source-dirs:   test
+
+    main-is:          EmitWarnings.hs
+    other-modules:
+                      Test1
+                      Test2
+
+    build-depends:
+                      base
+                    , variadic-mkvec

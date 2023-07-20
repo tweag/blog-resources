@@ -1,0 +1,128 @@
+Build profile: -w ghc-8.10.7 -O1
+In order, the following will be built (use -v for more details):
+ - variadic-mkvec-0.1.0.0 (test:emit-warnings) (ephemeral targets)
+Preprocessing test suite 'emit-warnings' for variadic-mkvec-0.1.0.0..
+GHCi, version 8.10.7: https://www.haskell.org/ghc/  :? for help
+[1 of 3] Compiling Test1            ( test/Test1.hs, interpreted )
+
+test/Test1.hs:19:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      enclosedGoodInferredSignature :: t1
+                                       -> t2 -> t3 -> Data.Vec.Vec '[t1, t2, t3]
+   |
+19 | enclosedGoodInferredSignature  a b c = X.variadic (X.litVec a b c)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:20:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      enclosedGoodInferredSignature1 :: Data.Vec.LiteralSyntax.EnclosedUnguarded.MkLitVec
+                                          '[t1, t2, t3]
+                                          (Data.Vec.LiteralSyntax.EnclosedOI.Variadic a) =>
+                                        t3 -> t2 -> t1 -> a
+   |
+20 | enclosedGoodInferredSignature1 a b c = XOI.variadic (XU.litVec a b c)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:21:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      enclosedGoodInferredSignature2 :: t1
+                                        -> t2 -> t3 -> Data.Vec.Vec '[t1, t2, t3]
+   |
+21 | enclosedGoodInferredSignature2 a b c = XU.variadic (XU.litVec a b c)
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:23:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      sentinelGoodInferredSignature :: t1
+                                       -> t2 -> t3 -> Data.Vec.Vec '[t1, t2, t3]
+   |
+23 | sentinelGoodInferredSignature  a b c = Y.beginVec a b c Y.endVec 
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:24:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      sentinelGoodInferredSignature' :: t1
+                                        -> t2 -> t3 -> Data.Vec.Vec '[t1, t2, t3]
+   |
+24 | sentinelGoodInferredSignature' a b c = YU.beginVec a b c YU.endVec 
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:32:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      enclosedBadInferredSignature :: Data.Vec.LiteralSyntax.EnclosedUnguarded.MkLitVec
+                                        '[t1, t2, t3] t4 =>
+                                      t3 -> t2 -> t1 -> t4
+   |
+32 | enclosedBadInferredSignature  a b c = XU.litVec a b c
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:33:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      enclosedBadInferredSignature' :: Data.Vec.LiteralSyntax.EnclosedOI.MkLitVec
+                                         '[t1, t2, t3] t4 =>
+                                       t3 -> t2 -> t1 -> t4
+   |
+33 | enclosedBadInferredSignature' a b c = XOI.litVec a b c
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+test/Test1.hs:35:1: warning: [-Wmissing-signatures]
+    Top-level binding with no type signature:
+      sentinelBadInferredSignature :: Data.Vec.LiteralSyntax.SentinelUnguarded.MkBeginVec
+                                        '[t1, t2, t3] t4 =>
+                                      t3 -> t2 -> t1 -> t4
+   |
+35 | sentinelBadInferredSignature a b c = YU.beginVec a b c
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[2 of 3] Compiling Test2            ( test/Test2.hs, interpreted )
+
+test/Test2.hs:21:35: warning: [-Wdeferred-type-errors]
+    * Likely accidental use of `litVec' outside of `variadic'!
+    * In the expression: X.litVec a b c
+      In an equation for `enclosedGoodErrorMessage':
+          enclosedGoodErrorMessage a b c = X.litVec a b c
+   |
+21 | enclosedGoodErrorMessage  a b c = X.litVec a b c
+   |                                   ^^^^^^^^^^^^^^
+
+test/Test2.hs:22:35: warning: [-Wdeferred-type-errors]
+    * Likely accidental use of `litVec' outside of `variadic'!
+    * In the expression: XOI.litVec a b c
+      In an equation for enclosedGoodErrorMessage':
+          enclosedGoodErrorMessage' a b c = XOI.litVec a b c
+   |
+22 | enclosedGoodErrorMessage' a b c = XOI.litVec a b c
+   |                                   ^^^^^^^^^^^^^^^^
+
+test/Test2.hs:25:34: warning: [-Wdeferred-type-errors]
+    * Likely accidental use of `beginVec' without `endVec'!
+    * In the expression: Y.beginVec a b c
+      In an equation for `sentinelGoodErrorMessage':
+          sentinelGoodErrorMessage a b c = Y.beginVec a b c
+   |
+25 | sentinelGoodErrorMessage a b c = Y.beginVec a b c
+   |                                  ^^^^^^^^^^^^^^^^
+
+test/Test2.hs:32:33: warning: [-Wdeferred-type-errors]
+    * No instance for (Data.Vec.LiteralSyntax.EnclosedUnguarded.MkLitVec
+                         '[c, b, a] (Vec '[a, b, c]))
+        arising from a use of `XU.litVec'
+    * In the expression: XU.litVec a b c
+      In an equation for `enclosedBadErrorMessage':
+          enclosedBadErrorMessage a b c = XU.litVec a b c
+   |
+32 | enclosedBadErrorMessage a b c = XU.litVec a b c
+   |                                 ^^^^^^^^^^^^^^^
+
+test/Test2.hs:35:33: warning: [-Wdeferred-type-errors]
+    * No instance for (Data.Vec.LiteralSyntax.SentinelUnguarded.MkBeginVec
+                         '[c, b, a] (Vec '[a, b, c]))
+        arising from a use of `YU.beginVec'
+    * In the expression: YU.beginVec a b c
+      In an equation for `sentinelBadErrorMessage':
+          sentinelBadErrorMessage a b c = YU.beginVec a b c
+   |
+35 | sentinelBadErrorMessage a b c = YU.beginVec a b c
+   |                                 ^^^^^^^^^^^^^^^^^
+[3 of 3] Compiling Main             ( test/EmitWarnings.hs, interpreted )
+Ok, three modules loaded.
+*Main> *Main> Leaving GHCi.
