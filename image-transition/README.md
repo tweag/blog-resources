@@ -4,3 +4,4 @@
 - Download Expo Go on your android/ios device, See: https://expo.dev/go
 - Then run `npm run start`, a QR code will appear on the terminal
 - Scan the QR code with your device's camera, this will automatically load the app in Expo Go.
+- Link to Expo Snack: https://snack.expo.dev/@wumz/image-transition?platform=ios

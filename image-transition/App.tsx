@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   buttons: {
     position: "absolute",
-    top: 80,
+    bottom: 80,
     right: 40,
     zIndex: 10,
     flexDirection: "row",
