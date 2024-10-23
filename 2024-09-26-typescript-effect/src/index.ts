@@ -21,7 +21,7 @@ const GeocodingResponse = Schema.Struct({
 
 type GeocodingResponse = Schema.Schema.Type<typeof GeocodingResponse>;
 
-const Weather = Schema.Struct({
+const WeatherResponse = Schema.Struct({
   current_units: Schema.Struct({
     temperature_2m: Schema.String,
     relative_humidity_2m: Schema.String,
@@ -36,7 +36,7 @@ const Weather = Schema.Struct({
   }),
 });
 
-type Weather = Schema.Schema.Type<typeof Weather>;
+type WeatherResponse = Schema.Schema.Type<typeof WeatherResponse>;
 
 // The field input
 const city = Option.fromNullable(
@@ -165,7 +165,7 @@ const selectCity = (result: CityResult) =>
       Effect.match({
         onFailure: (error) =>
           (weatherEl.innerHTML = `<p>An error occurred while fetching the weather: ${error}</p>`),
-        onSuccess: (weatherData: Weather) =>
+        onSuccess: (weatherData: WeatherResponse) =>
           (weatherEl.innerHTML = `
 <h2>${result.name}</h2>
 <p>Temperature: ${weatherData.current.temperature_2m}°C</p>
@@ -183,7 +183,7 @@ const getWeather = (result: CityResult) =>
     getRequest(
       `https://api.open-meteo.com/v1/forecast?latitude=${result.latitude}&longitude=${result.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation&timezone=auto&forecast_days=1`,
     ),
-    Effect.andThen(HttpClientResponse.schemaBodyJson(Weather)),
+    Effect.andThen(HttpClientResponse.schemaBodyJson(WeatherResponse)),
     Effect.scoped,
   );
 // Effect.gen(function* () {
