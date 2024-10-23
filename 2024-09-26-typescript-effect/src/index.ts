@@ -1,13 +1,12 @@
-import { Effect, Array, Option, pipe, Stream, Chunk, StreamEmit } from "effect";
-import { Schema } from "@effect/schema";
-import { ParseError } from "@effect/schema/ParseResult";
+import { Effect, Array, Option, pipe, Stream, Chunk, StreamEmit, Scope } from "effect";
+import { Schema, ParseResult } from "@effect/schema";
 import {
   FetchHttpClient,
   HttpClient,
   HttpClientResponse,
+  HttpClientError
 } from "@effect/platform";
-import { HttpClientError } from "@effect/platform/HttpClientError";
-import { Scope } from "effect/Scope";
+
 
 const CityResponse = Schema.Struct({
   name: Schema.String,
@@ -54,7 +53,7 @@ const weatherElement = Option.fromNullable(
   document.querySelector<HTMLDivElement>("#weather"),
 );
 
-const getRequest = (url: string): Effect.Effect<HttpClientResponse.HttpClientResponse, HttpClientError, Scope> =>
+const getRequest = (url: string): Effect.Effect<HttpClientResponse.HttpClientResponse, HttpClientError.HttpClientError, Scope.Scope> =>
   pipe(
     HttpClient.HttpClient,
     Effect.andThen((client) => client.get(url)),
@@ -162,7 +161,7 @@ const selectCity = (result: CityResponse): Option.Option<Promise<string>> =>
 
 const getWeather = (
   result: CityResponse,
-): Effect.Effect<WeatherResponse, HttpClientError | ParseError, never> =>
+): Effect.Effect<WeatherResponse, HttpClientError.HttpClientError | ParseResult.ParseError, never> =>
   pipe(
     getRequest(
       `https://api.open-meteo.com/v1/forecast?latitude=${result.latitude}&longitude=${result.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation&timezone=auto&forecast_days=1`,
