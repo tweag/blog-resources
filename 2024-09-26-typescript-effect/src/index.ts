@@ -1,10 +1,13 @@
 import { Effect, Array, Option, pipe, Stream, Chunk, StreamEmit } from "effect";
 import { Schema } from "@effect/schema";
+import { ParseError } from "@effect/schema/ParseResult";
 import {
   FetchHttpClient,
   HttpClient,
   HttpClientResponse,
 } from "@effect/platform";
+import { HttpClientError } from "@effect/platform/HttpClientError";
+import { Scope } from "effect/Scope";
 
 const CityResponse = Schema.Struct({
   name: Schema.String,
@@ -13,7 +16,7 @@ const CityResponse = Schema.Struct({
   longitude: Schema.Number,
 });
 
-type CityResult = Schema.Schema.Type<typeof CityResponse>;
+type CityResponse = Schema.Schema.Type<typeof CityResponse>;
 
 const GeocodingResponse = Schema.Struct({
   results: Schema.Array(CityResponse),
@@ -51,15 +54,7 @@ const weather = Option.fromNullable(
   document.querySelector<HTMLDivElement>("#weather"),
 );
 
-const getRequest = (url: string) =>
-  // Effect.gen(function* () {
-  //   const client = yield* HttpClient.HttpClient;
-  //
-  //   return yield* pipe(
-  //     client.get(url),
-  //     HttpClient.withTracerPropagation(false),
-  //   );
-  // }).pipe(Effect.provide(FetchHttpClient.layer));
+const getRequest = (url: string): Effect.Effect<HttpClientResponse.HttpClientResponse, HttpClientError, Scope> =>
   pipe(
     HttpClient.HttpClient,
     Effect.andThen((client) => client.get(url)),
@@ -67,12 +62,12 @@ const getRequest = (url: string) =>
     Effect.provide(FetchHttpClient.layer),
   );
 
-const getCities = function (search: string) {
+const getCities = (search: string): Effect.Effect<Option.Option<void>, never, never> => {
   Option.map(cities, (c) => (c.innerHTML = ""));
 
   return pipe(
     getCity(search),
-    Effect.map(renderCity),
+    Effect.map(renderCitySuggestions),
     // Check if the input is empty
     Effect.when(() => Boolean(search)),
   );
@@ -94,20 +89,7 @@ Option.map(city, (cityEl) => {
   );
 });
 
-const getCity = (city: string) =>
-  // Effect.gen(function* () {
-  //   const response = yield* getRequest(
-  //     `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`,
-  //   );
-  //
-  //   const geocoding = yield* pipe(
-  //     response,
-  //     HttpClientResponse.schemaBodyJson(GeocodingResponse), // Validate the response against the schema, it adds the `ParseResult.ParseError` to the `Error` type of the effect
-  //     Effect.orElseSucceed<GeocodingResponse>(() => ({ results: [] })), // If the effect is in a failure state, we can provide a default value to turn the effect into a success state
-  //   );
-  //
-  //   return geocoding.results;
-  // }).pipe(Effect.scoped);
+const getCity = (city: string): Effect.Effect<readonly CityResponse[], never, never> =>
   pipe(
     getRequest(
       `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=10&language=en&format=json`,
@@ -118,7 +100,7 @@ const getCity = (city: string) =>
     Effect.scoped,
   );
 
-const renderCity = (cities: readonly CityResult[]) => {
+const renderCitySuggestions = (cities: readonly CityResponse[]): void => {
   // If there are multiple cities, populate the suggestions
   if (cities.length > 1) {
     populateSuggestions(cities);
@@ -147,8 +129,8 @@ const renderCity = (cities: readonly CityResult[]) => {
   );
 };
 
-const populateSuggestions = (results: readonly CityResult[]) =>
-  Option.map(cities, (citiesEl) =>
+const populateSuggestions = (results: readonly CityResponse[]): Option.Option<void> =>
+  Option.map(citiesElement, (citiesEl) =>
     results.forEach((city) => {
       const li = document.createElement("li");
       li.innerText = `${city.name} - ${city.country_code}`;
@@ -157,8 +139,8 @@ const populateSuggestions = (results: readonly CityResult[]) =>
     }),
   );
 
-const selectCity = (result: CityResult) =>
-  Option.map(weather, (weatherEl) =>
+const selectCity = (result: CityResponse): Option.Option<Promise<string>> =>
+  Option.map(weatherElement, (weatherEl) =>
     pipe(
       result,
       getWeather,
@@ -178,7 +160,9 @@ const selectCity = (result: CityResult) =>
     ),
   );
 
-const getWeather = (result: CityResult) =>
+const getWeather = (
+  result: CityResponse,
+): Effect.Effect<WeatherResponse, HttpClientError | ParseError, never> =>
   pipe(
     getRequest(
       `https://api.open-meteo.com/v1/forecast?latitude=${result.latitude}&longitude=${result.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation&timezone=auto&forecast_days=1`,
@@ -186,10 +170,3 @@ const getWeather = (result: CityResult) =>
     Effect.andThen(HttpClientResponse.schemaBodyJson(WeatherResponse)),
     Effect.scoped,
   );
-// Effect.gen(function* () {
-//   const response = yield* getRequest(
-//     `https://api.open-meteo.com/v1/forecast?latitude=${result.latitude}&longitude=${result.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation&timezone=auto&forecast_days=1`,
-//   );
-//
-//   return yield* HttpClientResponse.schemaBodyJson(Weather)(response);
-// }).pipe(Effect.scoped, Effect.provide(FetchHttpClient.layer));
