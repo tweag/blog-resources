@@ -42,15 +42,15 @@ const WeatherResponse = Schema.Struct({
 type WeatherResponse = Schema.Schema.Type<typeof WeatherResponse>;
 
 // The field input
-const city = Option.fromNullable(
+const cityElement = Option.fromNullable(
   document.querySelector<HTMLInputElement>("#city"),
 );
 // The list of suggestions
-const cities = Option.fromNullable(
+const citiesElement = Option.fromNullable(
   document.querySelector<HTMLUListElement>("#cities"),
 );
 // The weather information
-const weather = Option.fromNullable(
+const weatherElement = Option.fromNullable(
   document.querySelector<HTMLDivElement>("#weather"),
 );
 
@@ -63,7 +63,7 @@ const getRequest = (url: string): Effect.Effect<HttpClientResponse.HttpClientRes
   );
 
 const getCities = (search: string): Effect.Effect<Option.Option<void>, never, never> => {
-  Option.map(cities, (c) => (c.innerHTML = ""));
+  Option.map(citiesElement, (c) => (c.innerHTML = ""));
 
   return pipe(
     getCity(search),
@@ -73,7 +73,7 @@ const getCities = (search: string): Effect.Effect<Option.Option<void>, never, ne
   );
 };
 
-Option.map(city, (cityEl) => {
+Option.map(cityElement, (cityEl) => {
   const stream = Stream.async(
     (emit: StreamEmit.Emit<never, never, string, void>) =>
       cityEl.addEventListener("input", function (_event) {
@@ -114,13 +114,13 @@ const renderCitySuggestions = (cities: readonly CityResponse[]): void => {
     Option.match({
       onSome: selectCity,
       onNone: () => {
-        const search = Option.match(city, {
+        const search = Option.match(cityElement, {
           onSome: (cityEl) => cityEl.value,
           onNone: () => "searched",
         });
 
         Option.map(
-          weather,
+          weatherElement,
           (weatherEl) =>
             (weatherEl.innerHTML = `<p>City ${search} not found</p>`),
         );
