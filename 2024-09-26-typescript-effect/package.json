@@ -1,0 +1,24 @@
+{
+  "name": "weather-city",
+  "version": "1.0.0",
+  "source": "./src/index.html",
+  "scripts": {
+    "dev": "parcel",
+    "build": "parcel build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.12.0",
+    "buffer": "^6.0.3",
+    "parcel": "latest",
+    "prettier": "^3.3.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "@effect/platform": "^0.65.3",
+    "effect": "^3.8.0"
+  }
+}

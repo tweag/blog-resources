@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Weather city</title>
+    <script type="module" src="./index.ts"></script>
+    <link rel="stylesheet" href="./styles.scss" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <main>
+      <section class="city-selector">
+        <input
+          autocomplete="off"
+          type="search"
+          id="city"
+          placeholder="Search the city"
+        />
+        <ul id="cities"></ul>
+      </section>
+      <section id="weather" class="weather">Select a city on the left</section>
+    </main>
+  </body>
+</html>
