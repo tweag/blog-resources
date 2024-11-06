@@ -10,7 +10,7 @@ import {
 
 const CityResponse = Schema.Struct({
   name: Schema.String,
-  country_code: Schema.String.pipe(Schema.length(2)),
+  country_code: pipe(Schema.String, Schema.length(2)),
   latitude: Schema.Number,
   longitude: Schema.Number,
 });
