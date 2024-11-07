@@ -10,7 +10,7 @@ import {
 
 const CityResponse = Schema.Struct({
   name: Schema.String,
-  country_code: Schema.String.pipe(Schema.length(2)),
+  country_code: pipe(Schema.String, Schema.length(2)),
   latitude: Schema.Number,
   longitude: Schema.Number,
 });
@@ -61,7 +61,7 @@ const getRequest = (url: string): Effect.Effect<HttpClientResponse.HttpClientRes
     Effect.provide(FetchHttpClient.layer),
   );
 
-const getCities = (search: string): Effect.Effect<Option.Option<void>, never, never> => {
+const getCities = (search: string): Effect.Effect<Option.Option<void | Option.Option<void>>, never, never> => {
   Option.map(citiesElement, (c) => (c.innerHTML = ""));
 
   return pipe(
@@ -99,20 +99,14 @@ const getCity = (city: string): Effect.Effect<readonly CityResponse[], never, ne
     Effect.scoped,
   );
 
-const renderCitySuggestions = (cities: readonly CityResponse[]): void => {
+const renderCitySuggestions = (cities: readonly CityResponse[]): void | Option.Option<void> => 
   // If there are multiple cities, populate the suggestions
-  if (cities.length > 1) {
-    populateSuggestions(cities);
-    return;
-  }
-
-  // We didn't get into the if statement above, so we have only one city or none
-  // Let's try to get the first city
+  // Otherwise, show a message that the city was not found
   pipe(
-    Array.head(cities),
-    Option.match({
-      onSome: selectCity,
-      onNone: () => {
+    cities,
+    Array.match({
+      onNonEmpty: populateSuggestions,
+      onEmpty: () => {
         const search = Option.match(cityElement, {
           onSome: (cityEl) => cityEl.value,
           onNone: () => "searched",
@@ -126,7 +120,7 @@ const renderCitySuggestions = (cities: readonly CityResponse[]): void => {
       },
     }),
   );
-};
+
 
 const populateSuggestions = (results: readonly CityResponse[]): Option.Option<void> =>
   Option.map(citiesElement, (citiesEl) =>
