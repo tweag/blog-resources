@@ -3,7 +3,6 @@ $(error Windows is not supported)
 endif
 
 LANGUAGE_NAME := tree-sitter-yolo
-HOMEPAGE_URL := https://github.com/tree-sitter/tree-sitter-yolo
 VERSION := 0.1.0
 
 # repository
