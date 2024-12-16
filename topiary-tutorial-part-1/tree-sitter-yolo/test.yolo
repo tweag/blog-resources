@@ -1,0 +1,9 @@
+input income, status
+output net_income, income_tax
+
+income_tax := case {
+  status = "exempted" | income < 10000 => 0,
+  _ => income * 0.2
+}
+
+net_income := income - income_tax
