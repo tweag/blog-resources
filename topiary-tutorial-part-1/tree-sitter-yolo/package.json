@@ -2,7 +2,6 @@
   "name": "tree-sitter-yolo",
   "version": "0.1.0",
   "description": "A tree-sitter parser for the Yolo programming language",
-  "repository": "github:tree-sitter/tree-sitter-yolo",
   "license": "MIT",
   "author": {
     "name": "Yann Hamdaoui",
