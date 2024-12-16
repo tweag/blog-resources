@@ -2,7 +2,8 @@
   languages = {
     yolo = {
       extensions = ["yolo"],
-      grammar.source.path = "/home/yago/Pro/Tweag/blog-posts/topiary-tutorial/tree-sitter-yolo/yolo.so",
+      # Update this path appropriately
+      grammar.source.path = "/path/to/blog-resources/topiary-tutorial-part-1/tree-sitter-yolo/yolo.so",
     }
   }
 }
