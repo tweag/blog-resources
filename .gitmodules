@@ -1,0 +1,3 @@
+[submodule "bash-test-dummy/scripts"]
+	path = bash-test-dummy/scripts
+	url = git@github.com:bensuperpc/scripts.git
