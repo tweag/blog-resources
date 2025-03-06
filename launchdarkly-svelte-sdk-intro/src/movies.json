@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Inception",
+    "genre": "Sci-Fi",
+    "rating": 8.8,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Inception"
+  },
+  {
+    "title": "The Dark Knight",
+    "genre": "Action",
+    "rating": 9.0,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=The%20Dark%20Knight"
+  },
+  {
+    "title": "Interstellar",
+    "genre": "Sci-Fi",
+    "rating": 8.6,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Interstellar"
+  },
+  {
+    "title": "Parasite",
+    "genre": "Thriller",
+    "rating": 8.6,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Parasite"
+  },
+  {
+    "title": "The Shawshank Redemption",
+    "genre": "Drama",
+    "rating": 9.3,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=The%20Shawshank%20Redemption"
+  },
+  {
+    "title": "Pulp Fiction",
+    "genre": "Crime",
+    "rating": 8.9,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Pulp%20Fiction"
+  },
+  {
+    "title": "The Matrix",
+    "genre": "Sci-Fi",
+    "rating": 8.7,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=The%20Matrix"
+  },
+  {
+    "title": "Forrest Gump",
+    "genre": "Drama",
+    "rating": 8.8,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Forrest%20Gump"
+  },
+  {
+    "title": "The Godfather",
+    "genre": "Crime",
+    "rating": 9.2,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=The%20Godfather"
+  },
+  {
+    "title": "Spirited Away",
+    "genre": "Animation",
+    "rating": 8.6,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Spirited%20Away"
+  },
+  {
+    "title": "The Lord of the Rings: The Return of the King",
+    "genre": "Fantasy",
+    "rating": 8.9,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=LOTR%20Return%20of%20the%20King"
+  },
+  {
+    "title": "Everything Everywhere All at Once",
+    "genre": "Sci-Fi",
+    "rating": 8.0,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Everything%20Everywhere"
+  },
+  {
+    "title": "Whiplash",
+    "genre": "Drama",
+    "rating": 8.5,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Whiplash"
+  },
+  {
+    "title": "Get Out",
+    "genre": "Horror",
+    "rating": 7.8,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Get%20Out"
+  },
+  {
+    "title": "The Grand Budapest Hotel",
+    "genre": "Comedy",
+    "rating": 8.1,
+    "image": "https://dummyjson.com/image/400x200/008080/ffffff?text=Grand%20Budapest%20Hotel"
+  }
+]
