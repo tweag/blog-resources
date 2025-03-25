@@ -6,7 +6,7 @@ This is a simple example project demonstrating how to use the LaunchDarkly Svelt
 
 ### Prerequisites
 
-- Ensure you have Node.js installed on your system. Any version greater than 20 should work fine.
+- Ensure you have Node.js installed on your system. If you use NVM, you can run `nvm use` to set the correct Node version. However, any version greater than 20 should work fine.
 
 ### Steps to Install and Run
 
