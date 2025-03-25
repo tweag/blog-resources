@@ -5,7 +5,7 @@
     movie: Movie;
   }
 
-  const { movie } = $props<MovieCardProps>();
+  const { movie }: MovieCardProps = $props();
 
   let isFavorite = $state(false);
 

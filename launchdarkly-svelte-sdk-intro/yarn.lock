@@ -186,10 +186,10 @@
   resolved "https://registry.yarnpkg.com/@launchdarkly/js-sdk-common/-/js-sdk-common-2.13.0.tgz#5fd767ec2369b8efb90d457f6d8b80856baba6a2"
   integrity sha512-cRoOQWBEOOynY3YDHIF4am1ZxiGu6MFK4v8WyNR0zN+nVjdQiuuyfAbHB//1Q0nrc1aB0flOy6e8C51eHy+VeA==
 
-"@nosnibor89/svelte-client-sdk@^0.1.291":
-  version "0.1.291"
-  resolved "https://registry.yarnpkg.com/@nosnibor89/svelte-client-sdk/-/svelte-client-sdk-0.1.291.tgz#ed7136c795fa1540ea7fd4302327f34bafeb2f9e"
-  integrity sha512-81Ll6XT3Dq+wgamNsslY8CxrOob1CmZTJ45wUeHuFddI/HRZFmToUlNbwE6ve/nVArh20rRmGz8OM2U188WcJg==
+"@nosnibor89/svelte-client-sdk@^0.1.293":
+  version "0.1.293"
+  resolved "https://registry.yarnpkg.com/@nosnibor89/svelte-client-sdk/-/svelte-client-sdk-0.1.293.tgz#096e1c398898d473853b000ff6013853110abb27"
+  integrity sha512-DFQfQe05euN7KKQRJedmnjOuBfYOU/0t3r7pPNCABEZEmA/LN9QOpDgSe9mdXQb0kTd1rvcjVPHaghR4846s4A==
   dependencies:
     "@launchdarkly/js-client-sdk" "^0.4.1"
     esm-env "^1.0.0"

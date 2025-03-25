@@ -1,38 +1,31 @@
-# sv
+# LaunchDarkly Svelte SDK Introduction Example
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is a simple example project demonstrating how to use the LaunchDarkly Svelte SDK in a Svelte application.
 
-## Creating a project
+## Installation and Running the Project
 
-If you're seeing this, you've probably already done this step. Congrats!
+### Prerequisites
 
-```bash
-# create a new project in the current directory
-npx sv create
+- Ensure you have Node.js installed on your system. Any version greater than 20 should work fine.
 
-# create a new project in my-app
-npx sv create my-app
-```
+### Steps to Install and Run
 
-## Developing
+1. From root, navigate to the project directory:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+   ```bash
+   cd launchdarkly-svelte-sdk-intro
+   ```
 
-```bash
-npm run dev
+2. Install dependencies:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+   ```bash
+   npm install
+   ```
 
-## Building
+3. Start the development server:
 
-To create a production version of your app:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+4. Open your browser and navigate to the URL provided in the terminal (usually `http://localhost:5173`).
