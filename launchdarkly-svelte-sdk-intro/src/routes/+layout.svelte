@@ -17,8 +17,6 @@
     key: orgKey,
   };
 
-  console.log("LD Context:", ldContext);
-
 </script>
 
 <LDProvider clientID={PUBLIC_LD_CLIENT_ID} context={ldContext}>
