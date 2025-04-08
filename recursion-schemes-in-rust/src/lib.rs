@@ -145,7 +145,7 @@ impl JsonValue {
     }
 
     /// A fold function, similar to [Iterator::fold], but for JSON values. From a way to generate
-    /// values of type `A` from the leafs, and a way to combine values of type `A` for each node
+    /// values of type `A` from the leaves, and a way to combine values of type `A` for each node
     /// with children into one value of type `A`, we can compute a value of type `A` for the whole
     /// JSON value.
     ///
