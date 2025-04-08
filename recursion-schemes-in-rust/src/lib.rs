@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 
-/// The original, "naive" representation of spanned JSON values without using recursion schemes.
+/// The direct representation of spanned JSON values without using recursion schemes. With this
+/// version, we can't easily have different representations with different ownership models or
+/// metadata (such as span) coexist.
 mod span {
     pub type Span = std::ops::Range<usize>;
 
@@ -63,18 +65,19 @@ pub struct ArenaJsonValue<'a> {
     data: JsonValueF<&'a JsonValue>,
 }
 
-/// Count the number of string leaves, without using recursion schemes.
-pub fn count_strings_naive(value: &JsonValue) -> u32 {
+/// Count the number of string leaves without using recursion schemes.
+pub fn count_strings_direct(value: &JsonValue) -> u32 {
     match &value.data {
         JsonValueF::String(_) => 1,
         JsonValueF::Number(_) => 0,
-        JsonValueF::Pair(first, second) => count_strings_naive(first) + count_strings_naive(second),
-        JsonValueF::Array(array) => array.iter().map(|elt| count_strings_naive(elt)).sum(),
-        JsonValueF::Object(object) => object.values().map(|elt| count_strings_naive(elt)).sum(),
+        JsonValueF::Pair(first, second) => count_strings_direct(first) + count_strings_direct(second),
+        JsonValueF::Array(array) => array.iter().map(|elt| count_strings_direct(elt)).sum(),
+        JsonValueF::Object(object) => object.values().map(|elt| count_strings_direct(elt)).sum(),
     }
 }
 
-/// Count the number of string leaves, using the `map` combinator, as in the blog post.
+/// Count the number of string leaves, using the `map` combinator, as in the blog post. This isn't
+/// great, since this version need to unduly consume the original [JsonValue].
 pub fn count_strings_map(value: JsonValue) -> u32 {
     match value.data.map(|unr| count_strings_map(*unr)) {
         JsonValueF::String(_) => 1,
