@@ -3,6 +3,10 @@
 Blog posts:
 - [Probabilistic Programming with monad‑bayes, Part 1:
 First Steps](https://www.tweag.io/posts/2019-09-20-monad-bayes-1.html)
+- [Probabilistic Programming with monad‑bayes, Part 2:
+Linear Regression](https://www.tweag.io/blog/2019-11-08-monad-bayes-2.html)
+- [Probabilistic Programming with monad‑bayes, Part 3:
+A Bayesian Neural Network](https://www.tweag.io/blog/2020-02-26-monad-bayes-3.html)
 
 ## How to run the notebook locally on Linux
 
