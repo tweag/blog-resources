@@ -1,0 +1,31 @@
+{
+  "grammars": [
+    {
+      "name": "yolo",
+      "camelcase": "Yolo",
+      "scope": "source.yolo",
+      "path": ".",
+      "file-types": null,
+      "injection-regex": "^yolo$"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "A tree-sitter parser for the (fake) Yolo programming language",
+    "authors": [
+      {
+        "name": "Yann Hamdaoui",
+        "email": "yann.hamdaoui@tweag.io"
+      }
+    ]
+  },
+  "bindings": {
+    "c": true,
+    "go": false,
+    "node": false,
+    "python": false,
+    "rust": false,
+    "swift": false 
+  }
+}
