@@ -1,44 +1,40 @@
 {
-  description = "Probabilistic Programming in Haskell blog resourses";
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
-    jupyterWith.url = "github:tweag/jupyterWith";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+  description = "Your jupyterWith project";
 
-  outputs = { self, nixpkgs, jupyterWith, flake-utils }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" "x86_64-darwin" ] (system:
-      let
-        pkgs = import nixpkgs {
-          system = system;
-          overlays = (builtins.attrValues jupyterWith.overlays) ++ [ (import ./haskell-overlay.nix) ];
-        };
-        iHaskell = pkgs.kernels.iHaskellWith {
-          name = "monad-bayes-series-env";
-          packages = p: with p; [
-            monad-bayes
-            hmatrix
-            hvega
-            statistics 
-            vector
-            ihaskell-hvega
-            formatting
-            foldl
-            histogram-fill
-          ];
-          haskellPackages = pkgs.haskell.packages.ghc865;
-          extraIHaskellFlags = "--codemirror Haskell";
-        };
-        jupyterEnvironment = pkgs.jupyterlabWith {
-          kernels = [ iHaskell ];
-        };
+  nixConfig.extra-substituters = [
+    "https://tweag-jupyter.cachix.org"
+  ];
+  nixConfig.extra-trusted-public-keys = [
+    "tweag-jupyter.cachix.org-1:UtNH4Zs6hVUFpFBTLaA4ejYavPo5EFFqgd7G7FxGW9g="
+  ];
+
+  inputs.flake-compat.url = "github:edolstra/flake-compat";
+  inputs.flake-compat.flake = false;
+  inputs.flake-utils.url = "github:numtide/flake-utils";
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+  inputs.jupyterWith.url = "github:tweag/jupyterWith";
+
+  outputs = {
+    self,
+    flake-compat,
+    flake-utils,
+    nixpkgs,
+    jupyterWith,
+  }:
+    flake-utils.lib.eachSystem
+    [
+      flake-utils.lib.system.x86_64-linux
+    ]
+    (
+      system: let
+        inherit (jupyterWith.lib.${system}) mkJupyterlabFromPath;
+        pkgs = import nixpkgs {inherit system;};
+        jupyterlab = mkJupyterlabFromPath ./kernels {inherit pkgs;};
       in rec {
-        apps.jupyterlab = {
-          type = "app";
-          program = "${jupyterEnvironment}/bin/jupyter-lab";
-        };
-        defaultApp = apps.jupyterlab;
-        devShell = jupyterEnvironment.env;
+        packages = {inherit jupyterlab;};
+        packages.default = jupyterlab;
+        apps.default.program = "${jupyterlab}/bin/jupyter-lab";
+        apps.default.type = "app";
       }
     );
 }
